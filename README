@@ -1,0 +1,9 @@
+Kelp is a simple event and content tracker
+
+Features:
+* content addressable storage of artifacts
+* one sqlite3 binary, managing all artifacts
+* one trunk
+* checkins ~are kind of like~ commits
+* events ~are kind of like~ tasks/issues/bugs/reports/tweets
+

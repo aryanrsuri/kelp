@@ -1,0 +1,30 @@
+# pyproject.toml
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kelp"
+version = "0.1.0"
+authors = [
+  { name="Aryan Suri", email="aryanrsuri@gmail.com" },
+]
+description = "A simple, single-trunk SCM and event tracker."
+requires-python = ">=3.8"
+dependencies = [
+    "click",
+    "blake3",
+    "Flask",
+]
+
+[project.scripts]
+# This is the magic part! It creates the `kelp` command in your shell.
+# It points to the `kelp` click.group object inside the `cli.py` file.
+kelp = "kelp.main:kelp"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+# This ensures the `templates` folder is included when you install the package.
+"kelp_scm" = ["templates/*.html"]

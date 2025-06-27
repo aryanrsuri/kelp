@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="meta-grid">
+    <strong>Title:</strong>   <span>{{ event.title }}</span>
+    <strong>Hash:</strong>    <span class="uuid">{{ event.evt_uuid }}</span>
+    <strong>Status:</strong>  <span class="tag-mod">{{ event.status }}</span>
+    <strong>Created:</strong> <span>{{ event.evt_ctime | strftime }}</span>
+    <strong>Updated:</strong> <span>{{ event.evt_mtime | strftime }}</span>
+</div>
+
+<hr>
+
+<h3>Description</h3>
+<div class="diff-container" style="background-color: #fdfdfd;">
+    <pre>{{ content }}</pre>
+</div>
+
+<div class="context-timeline" style="margin-top: 2em;">
+    <h3>Linked Check-ins</h3>
+    <ul>
+        {% for checkin in linked_checkins %}
+        <li>
+            <a href="{{ url_for('checkin_view', checkin_uuid=checkin.checkin_uuid) }}">
+                {{ checkin.comment | truncate(80) }} <span class="uuid">({{ checkin.checkin_uuid[:12] }})</span>
+            </a>
+        </li>
+        {% else %}
+        <li>No check-ins linked to this event.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+
+<div class="file-changes">
+    <h3>History</h3>
+    <table class="diff-table" style="white-space: normal;">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>User</th>
+                <th>Comment</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in log %}
+            <tr>
+                <td style="width: 160px;">{{ entry.log_mtime | strftime }}</td>
+                <td style="width: 100px;">{{ entry.log_user }}</td>
+                <td>{{ entry.log_comment }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

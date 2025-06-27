@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<ul class="timeline-list">
+    {% for c in checkins %}
+    <li style="display: flex; gap: 2rem;">
+	<div><strong>{{c.timestamp | strftime }}</strong></div>
+	<div>
+        <div><strong>{{ c.comment }}</strong></div>
+	<div >
+            Checkin <a  href="{{ url_for('checkin_view', checkin_uuid=c.checkin_uuid) }}">{{ c.checkin_uuid[:16] }}</a>
+            by {{ c.log_user | default('anonymous') }}
+        </div>
+	        {% if c.linked_events %}
+        <div class="timeline-events">
+            {% for event in c.linked_events %}
+            <div>
+		    <span>
+			    <span class="tag tag-link">{{event.link_type}}</span> on {{event.mtime | strftime }}
+		    </span>
+                <a href="{{ url_for('event_detail_view', evt_uuid=event.uuid) }}">
+                    {{ event.title }}
+		    ({{event.uuid[:12]}})
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+	</div>
+    </li>
+    {% else %}
+    <li>No checkins found.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

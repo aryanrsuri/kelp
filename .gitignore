@@ -1,1 +1,4 @@
-kelp
+__pycache__
+.DS_Store
+src/kelp.egg-info
+.kelp/kelp.db
